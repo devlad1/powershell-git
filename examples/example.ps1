@@ -1,4 +1,4 @@
- # This is is an example usage.
+# This is is an example usage.
 # Put this code in a powershell profile
 # The usual path is '$Home\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
 
