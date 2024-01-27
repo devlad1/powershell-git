@@ -4,7 +4,7 @@ function __git_ps1 {
     $REBASE_PATH=".git/REBASE_HEAD"
     $FETCH_HAED_PATH=".git/FETCH_HEAD"
     $CHERRY_PICK_PATH=".git/CHERRY_PICK_HEAD"
-    $OTHER_CONFLICT_PATH=".git/AUTO_MERGE"
+    $AUTO_MERGE_PATH=".git/AUTO_MERGE"
 
     function is_in_root_directory {
         return $(Get-Location) -match "^[A-Z]:\\$"
@@ -15,19 +15,19 @@ function __git_ps1 {
     }
     
     function is_merging {
-        return $(Test-Path $MERGE_PATH)
+        return $(Test-Path $MERGE_PATH) -and $(is_auto_merge)
     }
 
     function is_rebasing {
-        return $(Test-Path $REBASE_PATH)
+        return $(Test-Path $REBASE_PATH) -and $(is_auto_merge)
     }
 
     function is_cherry_picking {
-        return $(Test-Path $CHERRY_PICK_PATH)
+        return $(Test-Path $CHERRY_PICK_PATH) -and $(is_auto_merge)
     }
     
-    function is_other_conflict {
-        return $(Test-Path $OTHER_CONFLICT_PATH)
+    function is_auto_merge {
+        return $(Test-Path $AUTO_MERGE_PATH)
     }
 
     function cut {
@@ -65,7 +65,7 @@ function __git_ps1 {
                 $ps1="$ps1|REBASE"
             } elseif (is_cherry_picking) {
                 $ps1="$ps1|CHERRY-PICK"
-            } elseif (is_other_conflict) {
+            } elseif (is_auto_merge) {
                 $ps1="$ps1|CONFLICT"
             }
         }
